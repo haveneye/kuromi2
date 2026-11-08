@@ -72,12 +72,20 @@
   async function connect() {
     await ensureFirebase();
     if (!isGoogleUser(auth.currentUser)) {
-      if (auth.currentUser) await authSdk.signOut(auth);
-      // Redirect works on mobile browsers and doesn't depend on a popup surviving
-      // the asynchronous Firebase SDK initialization above.
-      localStorage.setItem(LINK_KEY, LEARNER_PROFILE);
-      await authSdk.signInWithRedirect(auth, new authSdk.GoogleAuthProvider());
-      if (!isGoogleUser(auth.currentUser)) return { ok: false, reason: 'redirecting' };
+      const provider = new authSdk.GoogleAuthProvider();
+      if (typeof authSdk.signInWithPopup === 'function') {
+        try {
+          const result = await authSdk.signInWithPopup(auth, provider);
+          if (!isGoogleUser(result?.user || auth.currentUser)) return { ok: false, reason: 'google-login-required' };
+        } catch (error) {
+          if (!['auth/popup-blocked', 'auth/operation-not-supported-in-this-environment'].includes(error.code)) throw error;
+        }
+      }
+      if (!isGoogleUser(auth.currentUser)) {
+        localStorage.setItem(LINK_KEY, LEARNER_PROFILE);
+        await authSdk.signInWithRedirect(auth, provider);
+        if (!isGoogleUser(auth.currentUser)) return { ok: false, reason: 'redirecting' };
+      }
     }
     if (!isGoogleUser(auth.currentUser)) return { ok: false, reason: 'google-login-required' };
     const firestore = firestoreSdk;
