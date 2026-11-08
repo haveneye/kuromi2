@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 
 function createFirebaseMock() {
-  const profilePath = 'artifacts/kuromi-app-default/public/data/profiles/마리';
+  const profilePath = 'artifacts/kuromi-study-default/public/data/profiles/마리';
   const profile = { points: 120 };
   const receipts = new Map();
   const ownership = new Map();
