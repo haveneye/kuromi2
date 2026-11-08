@@ -3,12 +3,14 @@
 const { initializeApp } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
+const { defineSecret } = require('firebase-functions/params');
 
 initializeApp();
 const db = getFirestore();
 const REGION = 'asia-northeast3';
 const APP_ID = 'kuromi-app-default';
 const PROFILE_NAME = '마리';
+const puppyOwnerUid = defineSecret('PUPPY_GAME_OWNER_UID');
 const CATALOG = Object.freeze({
   snack: Object.freeze({ milk: 30, cookie: 50, meat: 100 }),
   toy: Object.freeze({ tennis: 100, bone: 150, rope: 200, squeaky: 250, ball: 300, bear: 350, disc: 450, octopus: 550, bubbles: 650, nosework: 900 })
@@ -17,25 +19,23 @@ const CATALOG = Object.freeze({
 function refs() {
   const dataRoot = db.collection('artifacts').doc(APP_ID).collection('public').doc('data');
   return {
-    owner: dataRoot.collection('config').doc('puppyGameAccess'),
     profile: dataRoot.collection('profiles').doc(PROFILE_NAME)
   };
 }
 
-function requireGoogleOwner(request, ownerUid) {
+function requireGoogleOwner(request) {
   if (!request.auth) throw new HttpsError('unauthenticated', 'Google 로그인이 필요합니다.');
   if (request.auth.token.firebase?.sign_in_provider !== 'google.com') {
     throw new HttpsError('permission-denied', 'Google 계정으로 연결해 주세요.');
   }
-  if (!ownerUid || request.auth.uid !== ownerUid) {
+  if (!puppyOwnerUid.value() || request.auth.uid !== puppyOwnerUid.value()) {
     throw new HttpsError('permission-denied', '게임 소유자 계정이 아닙니다.');
   }
 }
 
-exports.purchasePuppyItem = onCall({ region: REGION }, async request => {
-  const { owner, profile } = refs();
-  const ownerSnapshot = await owner.get();
-  requireGoogleOwner(request, ownerSnapshot.exists ? ownerSnapshot.get('ownerUid') : null);
+exports.purchasePuppyItem = onCall({ region: REGION, secrets: [puppyOwnerUid] }, async request => {
+  requireGoogleOwner(request);
+  const { profile } = refs();
 
   const { kind, itemId, requestId } = request.data || {};
   const price = CATALOG[kind]?.[itemId];
@@ -72,10 +72,9 @@ exports.purchasePuppyItem = onCall({ region: REGION }, async request => {
   });
 });
 
-exports.listPuppyPurchases = onCall({ region: REGION }, async request => {
-  const { owner, profile } = refs();
-  const ownerSnapshot = await owner.get();
-  requireGoogleOwner(request, ownerSnapshot.exists ? ownerSnapshot.get('ownerUid') : null);
+exports.listPuppyPurchases = onCall({ region: REGION, secrets: [puppyOwnerUid] }, async request => {
+  requireGoogleOwner(request);
+  const { profile } = refs();
   const snapshot = await profile.collection('puppyGamePurchases').get();
   const purchases = snapshot.docs.map(doc => {
     const item = doc.data();

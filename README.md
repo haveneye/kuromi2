@@ -2,7 +2,7 @@
 
 ## 현재 적용: 로컬 돌봄 규칙 v2 (2026-10-31)
 
-HTML/CSS/JavaScript로 구성된 강아지 게임입니다. 지갑은 Google 로그인 뒤 기존 가족 학습 앱 Firebase 프로젝트 `kuromi-app`의 `마리` 프로필 `points`를 읽습니다. 구매 요청은 `functions/`의 서버 callable이 카탈로그 가격을 확인하고 잔액 차감·영수증·장난감 소유권을 Firestore transaction으로 기록하도록 구성했습니다. 구매 callable은 Firebase Console의 `artifacts/kuromi-app-default/public/data/config/puppyGameAccess` 문서에 `ownerUid`가 설정되고 Cloud Functions가 배포된 뒤에만 구매를 처리합니다. 돌봄·훈련 상태는 현재 브라우저 저장소를 사용합니다.
+HTML/CSS/JavaScript로 구성된 강아지 게임입니다. 지갑은 Google 로그인 뒤 기존 가족 학습 앱 Firebase 프로젝트 `kuromi-app`의 `마리` 프로필 `points`를 읽습니다. 구매 요청은 `functions/`의 서버 callable이 카탈로그 가격을 확인하고 잔액 차감·영수증·장난감 소유권을 Firestore transaction으로 기록하도록 구성했습니다. callable은 Cloud Functions Secret `PUPPY_GAME_OWNER_UID`에 등록한 소유자 UID와 일치하는 Google 로그인만 허용합니다. 돌봄·훈련 상태는 현재 브라우저 저장소를 사용합니다.
 
 ### 수치와 시간
 
@@ -64,6 +64,10 @@ v1 localStorage 원본 키와 별도로 our-puppy:v2:care에 이관 기준, :act
 저장된 강아지가 있으면 다시 열 때 메인 화면을 보여줍니다.
 첫 화면의 미리보기는 저장된 강아지가 없을 때 식사 보상을 지급하지 않습니다.
 이미 열어 둔 파일은 새로고침해야 변경이 반영됩니다.
+
+### Firebase 구매 서버 배포
+
+`functions/`는 기존 학습 앱 Functions 코드와 분리된 `puppy-game` codebase입니다. Firebase 프로젝트 `kuromi-app`에서 이 저장소를 받은 뒤 `firebase functions:secrets:set PUPPY_GAME_OWNER_UID`로 소유자 Google UID를 Secret에 저장하고, `firebase deploy --only functions --project kuromi-app`를 실행해야 구매/구매 복원 callable이 활성화됩니다. Secret을 지정하지 않으면 구매 함수는 소유자 검증에 실패합니다. Firebase Authentication에는 배포 주소의 호스트(`haveneye.github.io`)를 승인 도메인으로 추가해야 Google 로그인이 동작합니다.
 
 ## 화면과 캐릭터
 
