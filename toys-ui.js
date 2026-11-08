@@ -19,6 +19,9 @@
     'daily-limit': '오늘은 충분히 놀았어요! 내일 또 놀아요.',
     'affection-limit': '오늘은 신나게 놀았어요! 내일 또 놀아요.',
     'duplicate-request': '이미 처리한 놀이예요. 보상은 한 번만 반영돼요.',
+    'permission-denied': '연결된 Google 계정을 확인해 주세요. 구매는 등록된 보호자 계정만 할 수 있어요.',
+    'not-found': '구매 서버가 아직 준비 중이에요. 캐시는 차감되지 않았어요.',
+    'failed-precondition': '학습캐시 잔액을 확인할 수 없어 구매하지 않았어요.',
     'unsupported-storage': '안전한 저장을 지원하는 최신 브라우저에서 다시 열어 주세요.'
   };
   function setFeedback(message) {

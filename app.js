@@ -317,6 +317,9 @@ async function handleSnack(type, snackId) {
         'out-of-stock': '보유한 간식이 없어요. 간식 상점에서 구매해 주세요.',
         'insufficient-cash': getWalletState().connected ? '학습캐시가 부족해요.' : '테스트 캐시가 부족해요.',
         'not-connected': '학습 앱 프로필에 연결해 주세요.',
+        'permission-denied': '연결된 Google 계정을 확인해 주세요. 구매는 등록된 보호자 계정만 할 수 있어요.',
+        'not-found': '구매 서버가 아직 준비 중이에요. 캐시는 차감되지 않았어요.',
+        'failed-precondition': '학습캐시 잔액을 확인할 수 없어 구매하지 않았어요.',
         'duplicate-request': '이미 처리한 간식이에요.',
         'no-profile': '먼저 이름과 성별을 정해 주세요.',
         'unsupported-storage': '이 브라우저는 안전한 간식 저장을 지원하지 않아요.'
