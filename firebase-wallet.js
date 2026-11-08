@@ -7,7 +7,7 @@
   const LEARNER_PROFILE = '마리';
   const FIREBASE_CONFIG = {
     apiKey: 'AIzaSyBV_rnTIqxLquQAJ2i14S-Lin2y0bCIF3Q',
-    authDomain: 'kuromi-app.firebaseapp.com',
+    authDomain: 'kuromi-puppy-game.web.app',
     projectId: 'kuromi-app',
     storageBucket: 'kuromi-app.firebasestorage.app',
     messagingSenderId: '713556925410',
@@ -158,3 +158,4 @@
   window.dispatchEvent(new Event('puppywalletready'));
   restore().then(() => emit());
 })();
+
