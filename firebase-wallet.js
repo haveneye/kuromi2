@@ -3,7 +3,7 @@
 (async function () {
   'use strict';
   const LINK_KEY = 'our-puppy:learning-wallet-profile';
-  const APP_ID = 'kuromi-app-default';
+  const APP_ID = 'kuromi-study-default';
   const LEARNER_PROFILE = '마리';
   const FIREBASE_CONFIG = {
     apiKey: 'AIzaSyBV_rnTIqxLquQAJ2i14S-Lin2y0bCIF3Q',
