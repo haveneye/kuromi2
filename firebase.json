@@ -21,10 +21,7 @@
       "tests/**",
       "README.md",
       "preview-server.cjs",
-      "design/README.md",
-      "design/black-great-dane-idle-prompt.txt",
-      "design/preview-fixed.png",
-      "design/toy-shop-preview.png"
+      "design/**"
     ]
   }
 }
