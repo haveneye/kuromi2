@@ -567,7 +567,7 @@ document.querySelector('#wallet-connect-form').addEventListener('submit', async 
   try {
     const result = await globalThis.PuppyWallet.connect();
     if (!result.ok) {
-      status.textContent = result.reason === 'profile-not-found' ? '학습 앱에서 마리 프로필을 찾지 못했어요.' : '연결을 확인해 주세요.';
+      status.textContent = result.reason === 'profile-not-found' ? '학습 앱에서 마리 프로필을 찾지 못했어요.' : result.reason === 'redirecting' ? 'Google 계정 로그인 화면으로 이동하고 있어요…' : '연결을 확인해 주세요.';
       return;
     }
     status.textContent = result.balance === null ? '연결했지만 잔액을 읽지 못했어요.' : '연결 완료! 현재 학습캐시 ' + result.balance.toLocaleString('ko-KR') + 'P예요.';

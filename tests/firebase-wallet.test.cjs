@@ -16,7 +16,8 @@ function createFirebaseMock() {
   const authSdk = {
     GoogleAuthProvider,
     getAuth() { return auth; },
-    async signInWithPopup(target) { target.currentUser = { uid: 'owner', isAnonymous: false, providerData: [{ providerId: 'google.com' }] }; },
+    async signInWithRedirect(target) { target.currentUser = { uid: 'owner', isAnonymous: false, providerData: [{ providerId: 'google.com' }] }; },
+    async getRedirectResult(target) { return target.currentUser ? { user: target.currentUser } : null; },
     async signOut(target) { target.currentUser = null; }
   };
   const firestoreSdk = {
