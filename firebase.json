@@ -3,5 +3,20 @@
     "source": "functions",
     "codebase": "puppy-game",
     "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log"]
+  },
+  "hosting": {
+    "site": "kuromi-puppy-game",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "tests/**",
+      "design/**",
+      "README.md",
+      "preview-server.cjs"
+    ]
   }
 }
