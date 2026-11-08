@@ -2,7 +2,7 @@
 
 ## 현재 적용: 로컬 돌봄 규칙 v2 (2026-10-31)
 
-HTML/CSS/JavaScript로 구성된 강아지 게임입니다. 지갑은 Google 로그인 뒤 기존 가족 학습 앱 Firebase 프로젝트 `kuromi-app`의 `마리` 프로필 `points`를 읽습니다. 구매 요청은 `functions/`의 서버 callable이 카탈로그 가격을 확인하고 잔액 차감·영수증·장난감 소유권을 Firestore transaction으로 기록하도록 구성했습니다. callable은 Cloud Functions Secret `PUPPY_GAME_OWNER_UID`에 등록한 소유자 UID와 일치하는 Google 로그인만 허용합니다. 돌봄·훈련 상태는 현재 브라우저 저장소를 사용합니다.
+HTML/CSS/JavaScript로 구성된 강아지 게임입니다. 지갑은 Google 로그인 뒤 기존 가족 학습 앱 Firebase 프로젝트 `kuromi-app`의 `kuromi-study-default`에 있는 `마리` 프로필 `points`를 읽습니다. 구매 요청은 `functions/`의 서버 callable이 카탈로그 가격을 확인하고 잔액 차감·영수증·장난감 소유권을 Firestore transaction으로 기록하도록 구성했습니다. callable은 Cloud Functions Secret `PUPPY_GAME_OWNER_UID`에 등록한 소유자 UID와 일치하는 Google 로그인만 허용합니다. 돌봄·훈련 상태는 현재 브라우저 저장소를 사용합니다.
 
 ### 수치와 시간
 
@@ -166,7 +166,7 @@ node --test tests/game-state.test.cjs tests/app.test.cjs tests/snacks.test.cjs
 날짜 변경 시 오늘 횟수만 0으로 표시하고 재고·구매 내역·지난 급여 기록을 보존합니다.
 전체 테스트 초기화는 로컬 게임 진행 상태와 테스트 지갑만 초기화하고, 실제 학습 앱 잔액은 변경하지 않습니다.
 
-지갑 연결 후 간식 구매는 기존 `artifacts/kuromi-app-default/public/data/profiles/마리` 문서의 `points`를 차감합니다. 각 구매는 Firestore transaction과 중복 방지 영수증으로 기록하고, 영수증은 연결한 게임의 간식·장난감 보유 내역 복구에 사용합니다. 캐시 잔액은 실시간으로 표시합니다.
+지갑 연결 후 간식 구매는 기존 `artifacts/kuromi-study-default/public/data/profiles/마리` 문서의 `points`를 차감합니다. 각 구매는 Firestore transaction과 중복 방지 영수증으로 기록하고, 영수증은 연결한 게임의 간식·장난감 보유 내역 복구에 사용합니다. 캐시 잔액은 실시간으로 표시합니다.
 추가 파일 `tests/snacks.test.cjs`에서 급여 상한·동시 요청·원자적 저장·복원·자정 전환을 검증합니다.
 참고 이미지 원본은 `assets/snack-reference.png`에 보관합니다.
 
