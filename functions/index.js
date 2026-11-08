@@ -8,7 +8,7 @@ const { defineSecret } = require('firebase-functions/params');
 initializeApp();
 const db = getFirestore();
 const REGION = 'asia-northeast3';
-const APP_ID = 'kuromi-app-default';
+const APP_ID = 'kuromi-study-default';
 const PROFILE_NAME = '마리';
 const puppyOwnerUid = defineSecret('PUPPY_GAME_OWNER_UID');
 const CATALOG = Object.freeze({
