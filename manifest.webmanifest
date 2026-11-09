@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "우리 집 강아지",
+  "short_name": "강아지 키우기",
+  "description": "검은 그레이트데인 강아지를 돌보고 함께 자라는 가족 게임",
+  "lang": "ko-KR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fffdf5",
+  "theme_color": "#a8be83",
+  "icons": [
+    {
+      "src": "/assets/puppy-app-icon.svg?v=4",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/black-great-dane-idle.png",
+      "sizes": "1280x1280",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
